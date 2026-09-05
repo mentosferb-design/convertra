@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CC — Live Currency Converter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <canvas id="stars"></canvas>
+
+    <!-- ===== NAVBAR ===== -->
+    <header class="navbar" id="navbar">
+        <div class="nav-wrap">
+            <a href="#" class="nav-brand" id="navBrand" aria-label="Home">
+                <span class="brand-mark">CC</span>
+                <span class="brand-text">Currency<strong>Convert</strong></span>
+            </a>
+
+            <nav class="nav-center" id="navCenter">
+                <a href="#converter" class="nav-link active" data-section="converter">Converter</a>
+                <a href="#rates" class="nav-link" data-section="rates">Rates</a>
+                <a href="#features" class="nav-link" data-section="features">Features</a>
+            </nav>
+
+            <div class="nav-right">
+                <a href="#converter" class="nav-transfer" id="navTransfer" title="Quick Convert">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="17 1 21 5 17 9"></polyline>
+                        <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+                        <polyline points="7 23 3 19 7 15"></polyline>
+                        <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+                    </svg>
+                    <span>Transfer</span>
+                </a>
+                <button class="nav-login" id="loginNavBtn" type="button">
+                    <span class="login-avatar">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </span>
+                    <span class="login-label" id="loginNavLabel">Sign In</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <div class="hero-badge">Live Exchange Rates</div>
+            <h1 class="hero-title">Convert 160+<br>Currencies Instantly</h1>
+            <p class="hero-sub">Real-time exchange rates. Scroll down to watch the site transform into dark mode.</p>
+            <div class="hero-actions">
+                <a href="#converter" class="btn-primary" id="heroConvert">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="17 1 21 5 17 9"></polyline>
+                        <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+                        <polyline points="7 23 3 19 7 15"></polyline>
+                        <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+                    </svg>
+                    Start Converting
+                </a>
+                <a href="#rates" class="btn-ghost" id="heroRates">View All Rates</a>
+            </div>
+        </div>
+        <div class="scroll-cue" id="scrollCue">
+            <span>Scroll for dark mode</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+        </div>
+    </section>
+
+    <!-- ===== CONVERTER ===== -->
+    <main class="main" id="converter">
+        <div class="converter-card">
+            <div class="card-head">
+                <div class="card-head-left">
+                    <div class="card-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                        </svg>
+                    </div>
+                    <span class="card-title">Currency Converter</span>
+                </div>
+                <div class="live-badge" id="liveBadge">
+                    <span class="live-dot"></span>
+                    <span>LIVE</span>
+                </div>
+            </div>
+
+            <div class="converter-body">
+                <div class="field">
+                    <label for="amount">You send</label>
+                    <div class="input-row">
+                        <input type="number" id="amount" value="1" min="0" step="any" placeholder="0.00">
+                        <div class="currency-dropdown" id="fromDropdown">
+                            <button class="currency-trigger" id="fromTrigger" type="button" aria-haspopup="listbox">
+                                <span class="currency-trigger-label" id="fromLabel"></span>
+                            </button>
+                            <div class="currency-menu" id="fromMenu" hidden>
+                                <div class="currency-search">
+                                    <input type="text" class="currency-search-input" placeholder="Search currency or country...">
+                                </div>
+                                <ul class="currency-list" role="listbox"></ul>
+                            </div>
+                            <select class="currency-pick" id="fromCurrency" hidden></select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="swap-divider">
+                    <span class="divider-line"></span>
+                    <button class="swap-btn" id="swapBtn" type="button" aria-label="Swap currencies">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="17 1 21 5 17 9"></polyline>
+                            <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+                            <polyline points="7 23 3 19 7 15"></polyline>
+                            <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+                        </svg>
+                    </button>
+                    <span class="divider-line"></span>
+                </div>
+
+                <div class="field">
+                    <label for="toCurrency">They receive</label>
+                    <div class="input-row">
+                        <div class="result-val" id="resultDisplay">0.00</div>
+                        <div class="currency-dropdown" id="toDropdown">
+                            <button class="currency-trigger" id="toTrigger" type="button" aria-haspopup="listbox">
+                                <span class="currency-trigger-label" id="toLabel"></span>
+                            </button>
+                            <div class="currency-menu" id="toMenu" hidden>
+                                <div class="currency-search">
+                                    <input type="text" class="currency-search-input" placeholder="Search currency or country...">
+                                </div>
+                                <ul class="currency-list" role="listbox"></ul>
+                            </div>
+                            <select class="currency-pick" id="toCurrency" hidden></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rate-bar">
+                <span class="rate-status-dot" id="rateDot"></span>
+                <span class="rate-msg" id="rateText">Fetching live rates...</span>
+                <button class="rate-refresh" id="refreshBtn" type="button" aria-label="Refresh rates">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="23 4 23 10 17 10"></polyline>
+                        <polyline points="1 20 1 14 7 14"></polyline>
+                        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="quick-pairs" id="quickPairs"></div>
+        </div>
+
+        <!-- ===== RATES ===== -->
+        <section class="section-card" id="rates">
+            <div class="section-head">
+                <div>
+                    <h2>Popular Exchange Rates</h2>
+                    <p class="section-sub">Tap any pair to convert instantly</p>
+                </div>
+            </div>
+            <div class="rates-grid" id="ratesTable"></div>
+        </section>
+
+        <!-- ===== FEATURES ===== -->
+        <section class="section-card" id="features">
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-ico feature-ico--globe">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                        </svg>
+                    </div>
+                    <h3>160+ Currencies</h3>
+                    <p>Major and exotic currencies from every corner of the globe, always up to date.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-ico feature-ico--bolt">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                        </svg>
+                    </div>
+                    <h3>Real-Time Rates</h3>
+                    <p>Live exchange rates fetched and cached every 60 seconds for instant conversion.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-ico feature-ico--moon">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </div>
+                    <h3>Auto Dark Mode</h3>
+                    <p>Scroll down and the entire site transitions smoothly into dark mode — try it now.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== DISCLAIMER ===== -->
+        <div class="disclaimer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <p>Exchange rates are provided for informational purposes only and may not reflect real-time market rates. Always verify with your financial institution.</p>
+        </div>
+
+        <footer class="footer">
+            <div class="footer-left">
+                <span class="brand-mark brand-mark--sm">CC</span>
+                <span>&copy; 2026 CurrencyConvert</span>
+            </div>
+            <div class="footer-right">
+                <span>Rates refresh every 60s</span>
+            </div>
+        </footer>
+    </main>
+
+
+
+    <!-- ===== LOGIN MODAL ===== -->
+    <div class="modal-backdrop" id="loginModal" hidden>
+        <div class="modal-box">
+            <div class="modal-head">
+                <div class="modal-head-left">
+                    <span class="brand-mark brand-mark--modal">CC</span>
+                    <div>
+                        <h3>Welcome back</h3>
+                        <p class="modal-sub">Sign in to the admin dashboard</p>
+                    </div>
+                </div>
+                <button class="modal-x" id="loginCloseBtn" type="button" aria-label="Close">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <form class="modal-form" id="loginForm">
+                <div class="modal-field">
+                    <label for="adminUser">Username</label>
+                    <div class="modal-input-wrap">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <input type="text" id="adminUser" autocomplete="username" placeholder="Enter username">
+                    </div>
+                </div>
+                <div class="modal-field">
+                    <label for="adminPass">Password</label>
+                    <div class="modal-input-wrap">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                        <input type="password" id="adminPass" autocomplete="current-password" placeholder="Enter password">
+                    </div>
+                </div>
+                <div class="modal-error" id="loginError" hidden></div>
+                <button class="modal-submit" type="submit">
+                    Sign In
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </button>
+                <p class="modal-hint">Demo credentials: <strong>mentos</strong> / <strong>mentos321</strong></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== ADMIN PANEL ===== -->
+    <div class="admin-panel" id="adminPanel" hidden>
+        <aside class="admin-sidebar">
+            <div class="admin-brand">
+                <span class="brand-mark brand-mark--admin">CC</span>
+                <span>Admin</span>
+            </div>
+            <nav class="admin-nav">
+                <button class="admin-tab active" data-tab="overview" type="button">Overview</button>
+                <button class="admin-tab" data-tab="rates" type="button">Rates</button>
+                <button class="admin-tab" data-tab="users" type="button">Users</button>
+                <button class="admin-tab" data-tab="settings" type="button">Settings</button>
+            </nav>
+            <button class="admin-exit" id="exitAdminBtn" type="button">&larr; Back to site</button>
+        </aside>
+        <main class="admin-main">
+            <div class="admin-topbar">
+                <h1 id="adminTitle">Dashboard</h1>
+                <div class="admin-user">
+                    <span id="adminNameLabel">admin</span>
+                    <button class="admin-logout" id="logoutBtn" type="button">Logout</button>
+                </div>
+            </div>
+            <section class="admin-section active" id="tab-overview">
+                <div class="stat-cards">
+                    <div class="stat-card"><h3>Currencies</h3><p id="statCurrencies">&mdash;</p></div>
+                    <div class="stat-card"><h3>Rates Loaded</h3><p id="statRates">&mdash;</p></div>
+                    <div class="stat-card"><h3>Source</h3><p id="statSource" style="font-size:.9rem">&mdash;</p></div>
+                    <div class="stat-card"><h3>Last Updated</h3><p id="statUpdated" style="font-size:1rem">&mdash;</p></div>
+                </div>
+                <div class="admin-overview-note">
+                    <h3>Welcome back</h3>
+                    <p>Rates are fetched live and cached for 60 seconds. Snapshots are logged to the database when available.</p>
+                </div>
+            </section>
+            <section class="admin-section" id="tab-rates">
+                <div class="admin-searchbar">
+                    <input type="text" id="adminRateSearch" placeholder="Search currency or code...">
+                    <button class="admin-btn" id="adminRefreshRates" type="button">Refresh</button>
+                </div>
+                <div class="admin-table-wrap">
+                    <table class="admin-table">
+                        <thead><tr><th></th><th>Code</th><th>Currency</th><th>Rate</th><th>Status</th></tr></thead>
+                        <tbody id="adminRateTable"></tbody>
+                    </table>
+                </div>
+            </section>
+            <section class="admin-section" id="tab-users">
+                <div class="admin-placeholder">
+                    <h3>User management</h3>
+                    <p>Handled by the backend administrator. Contact your system admin to manage accounts.</p>
+                </div>
+            </section>
+            <section class="admin-section" id="tab-settings">
+                <div class="admin-placeholder">
+                    <h3>Settings</h3>
+                    <p>Configure rate refresh intervals, default pairs, and API sources.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

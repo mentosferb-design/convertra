@@ -1,0 +1,25 @@
+{
+  "name": "cc-currency-converter",
+  "version": "1.0.0",
+  "description": "Backend for CC Currency Converter — proxies live exchange rates and powers the admin dashboard.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "currency",
+    "converter",
+    "exchange-rates",
+    "xe-like",
+    "admin"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.114.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "morgan": "^1.10.0"
+  }
+}
