@@ -1,0 +1,38 @@
+{
+  "name": "cc-currency-converter",
+  "version": "1.0.0",
+  "description": "CC Currency Converter — live exchange rates, searchable converter frontend, and admin dashboard.",
+  "private": true,
+  "main": "server.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "seed": "node seed.js"
+  },
+  "keywords": [
+    "currency",
+    "converter",
+    "exchange-rates",
+    "forex",
+    "xe-like",
+    "admin",
+    "express",
+    "supabase"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mentosferb-design/convertra.git"
+  },
+  "author": "mentosferb-design",
+  "license": "MIT",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.114.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "morgan": "^1.10.0"
+  }
+}

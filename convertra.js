@@ -1,5 +1,6 @@
 /* ================================================================
-   CC Currency Converter — Frontend Logic
+   CC Currency Converter
+    — Frontend Logic
    ================================================================ */
 
 // ---------- Currency data ----------
